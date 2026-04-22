@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mexc-gurdian"
+version = "0.2.0"
+description = "MEXC futures USDT monitor with Telegram alerts, MCP tools, and dashboard API"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "aiohttp>=3.10.0",
+  "ccxt>=4.4.0",
+  "pydantic>=2.8.0",
+  "pydantic-settings>=2.4.0",
+  "fastmcp>=0.2.0",
+  "fastapi>=0.115.0",
+  "uvicorn>=0.30.0"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,32 @@
+services:
+  mexc-gurdian:
+    build: .
+    container_name: mexc-gurdian
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    command: ["python", "-m", "mexc_guardian.main"]
+
+  mexc-gurdian-mcp:
+    build: .
+    container_name: mexc-gurdian-mcp
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    command: ["python", "-m", "mexc_guardian.mcp_server"]
+
+  mexc-gurdian-web:
+    build: .
+    container_name: mexc-gurdian-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "${WEB_PORT:-8080}:${WEB_PORT:-8080}"
+    command: ["sh", "-c", "uvicorn mexc_guardian.web:app --host ${WEB_HOST:-0.0.0.0} --port ${WEB_PORT:-8080}"]
