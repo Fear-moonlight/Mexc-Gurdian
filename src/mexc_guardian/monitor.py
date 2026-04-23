@@ -167,7 +167,9 @@ class MonitorService:
 
     def _trim(self, price_deque: deque[tuple[datetime, float]], now: datetime) -> None:
         oldest = now - self.window
-        while price_deque and price_deque[0][0] < oldest:
+        # Keep one boundary point just before/at the rolling window so the
+        # 4h baseline remains available for eligibility and percentage math.
+        while len(price_deque) > 1 and price_deque[1][0] <= oldest:
             price_deque.popleft()
 
     async def _notify_trigger(self, alert: AlertState) -> None:
